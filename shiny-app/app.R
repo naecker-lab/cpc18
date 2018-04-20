@@ -52,7 +52,8 @@ ui <- dashboardPage(
               h2("Tab 1"),
               DT::dataTableOutput("raw_dt")),
       tabItem(tabName = "tab2",
-              h2("Tab 2")),
+              h2("Tab 2"),
+              plotlyOutput("histogram")),
       tabItem(tabName = "tab3",
               h2("Tab 3"))
     )
@@ -66,10 +67,18 @@ ui <- dashboardPage(
 ## Shiny Server ##
 ##################
 server <- function(input, output) {
+  
   output$raw_dt <- DT::renderDataTable({
     data
   })
   
+  output$histogram <- renderPlotly({
+    p <- ggplot(data, aes(x=Order, fill=Button)) + 
+      geom_histogram(binwidth=.5, position="dodge") +
+      geom_vline(xintercept=15, linetype="dashed", size=.25)
+    ggplotly(p)
+  })
+
 }
 ## End of server
 
