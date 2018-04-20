@@ -49,7 +49,7 @@ win_stats <- win %>%
   summarise(total_win_percent = mean(win_percent))
 
 ##dataset for just person 1
-p1 <- filter(df3, SubjID == 10100)
+p1 <- filter(df3, SubjID == 10102)
 
 View(filter(p1, Trial <= 5))
 
