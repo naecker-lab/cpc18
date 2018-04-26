@@ -42,7 +42,10 @@ df3 <- df2 %>%
   group_by(SubjID, GameID)%>%
   mutate(lag = shift(B, 1),
          change = ifelse(B == lag, 0 ,1))
-
+#counting frequency of changes for each gameid
+#am i misinterpreting gameid? there are a lot of unique gameids...
+gameid_changes = df3 %>% group_by(GameID) %>% summarise(changes=sum(change, na.rm=T)) 
+gameid_changes = gameid_changes[order(gameid_changes$changes),]
 
 
 ##by ID, percent of wins/ losses
